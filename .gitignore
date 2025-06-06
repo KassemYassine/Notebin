@@ -1,0 +1,8 @@
+# Rust artifacts
+/Notebin-Backend/target/
+Cargo.lock
+
+# Next.js / Node.js artifacts
+/node_modules/
+/.next/
+.env*
