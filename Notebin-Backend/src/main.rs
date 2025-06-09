@@ -1,14 +1,19 @@
 mod config;                     
 mod db;
+mod routes;
+mod handlers;
+mod services;
+mod models;
 use axum::{
     extract::Extension,
-    routing::get,
-    Router,
+    
 };
 use anyhow::Result;            
 use dotenv::dotenv;           
 use config::Config;            
-use db::init_db_pool;      
+use db::init_db_pool; 
+use routes::app_router;
+
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -17,9 +22,8 @@ async fn main() -> Result<()> {
     let config = Config::from_env()?;
     let pool = init_db_pool(&config.database_url).await?;
 
-    let app = Router::new()
-        .route("/", get(|| async { "Notebin is alive!" }))
-        .layer(Extension(pool));
+    let app = app_router()
+    .layer(Extension(pool));
 
     let addr = ([0, 0, 0, 0], config.port).into();
     println!("▶ Listening on http://{}", addr);
