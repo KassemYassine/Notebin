@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-gray-50 text-gray-900">
-        <header className="bg-white shadow-sm p-4 flex justify-between">
+        <header className="bg-amber-300 shadow-sm p-4 flex justify-between">
           <h1 className="text-xl font-bold">Notebin</h1>
           <nav className="space-x-4">
             <Link href="/" className="hover:underline">Home</Link>
