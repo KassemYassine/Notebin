@@ -14,7 +14,7 @@ use config::Config;
 use db::init_db_pool; 
 use routes::app_router;
 use tower_http::cors::{CorsLayer, Any};      
-use axum::http::Method;                            // ← for allow_methods
+use axum::http::Method;                            
 
 #[tokio::main]
 async fn main() -> Result<()> {
