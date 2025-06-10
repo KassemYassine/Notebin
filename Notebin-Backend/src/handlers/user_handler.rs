@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use axum::{
     extract::{Extension, Json},
     http::StatusCode,
-    response::IntoResponse,
+    response::IntoResponse,response::Response
 };
 use sqlx::PgPool;
 
@@ -50,5 +50,16 @@ pub async fn login_user(
     match user_service::authenticate_user(&pool, &username, &password).await {
         Ok(user) => (StatusCode::OK, Json(user)).into_response(),
         Err(_)   => (StatusCode::UNAUTHORIZED, "invalid credentials").into_response(),
+    }
+}
+pub async fn list_users(
+    Extension(pool): Extension<PgPool>,
+) -> Response {
+    match user_service::list_users(&pool).await {
+        Ok(users) => (StatusCode::OK, Json(users)).into_response(),
+        Err(e)    => {
+            eprintln!("list_users error: {e}");
+            (StatusCode::INTERNAL_SERVER_ERROR, "could not fetch users").into_response()
+        }
     }
 }

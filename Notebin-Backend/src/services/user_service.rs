@@ -44,3 +44,17 @@ pub async fn authenticate_user(
         Err(anyhow!("Invalid credentials"))
     }
 }
+pub async fn list_users(pool: &PgPool) -> Result<Vec<User>> {
+    let rows = sqlx::query_as!(
+        User,
+        r#"
+        SELECT id, username, password
+        FROM users
+        ORDER BY id
+        "#
+    )
+    .fetch_all(pool)
+    .await?;
+
+    Ok(rows)
+}
