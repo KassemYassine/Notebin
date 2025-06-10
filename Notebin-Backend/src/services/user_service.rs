@@ -58,3 +58,22 @@ pub async fn list_users(pool: &PgPool) -> Result<Vec<User>> {
 
     Ok(rows)
 }
+pub async fn get_user_by_id(
+    pool: &PgPool,
+    user_id: i32,
+) -> Result<User> {
+    let user = sqlx::query_as!(
+        User,
+        r#"
+        SELECT id, username, password
+        FROM users
+        WHERE id = $1
+        "#,
+        user_id
+    )
+    .fetch_one(pool)
+    .await
+    .map_err(|_| anyhow!("User not found"))?;
+
+    Ok(user)
+}

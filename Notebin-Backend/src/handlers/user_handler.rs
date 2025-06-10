@@ -2,7 +2,7 @@
 use std::collections::HashMap;
 
 use axum::{
-    extract::{Extension, Json},
+    extract::{Extension, Json,Path},
     http::StatusCode,
     response::IntoResponse,response::Response
 };
@@ -61,5 +61,14 @@ pub async fn list_users(
             eprintln!("list_users error: {e}");
             (StatusCode::INTERNAL_SERVER_ERROR, "could not fetch users").into_response()
         }
+    }
+}
+pub async fn get_user_by_id(
+    Path(id): Path<i32>,
+    Extension(pool): Extension<PgPool>,
+) -> Response {
+    match user_service::get_user_by_id(&pool, id).await {
+        Ok(user) => (StatusCode::OK, Json(user)).into_response(),
+        Err(_)   => (StatusCode::NOT_FOUND, "user not found").into_response(),
     }
 }
