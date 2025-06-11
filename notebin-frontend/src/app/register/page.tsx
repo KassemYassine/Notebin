@@ -15,7 +15,7 @@ export default function RegisterPage() {
         method: "POST",
         body: JSON.stringify({ username, password }),
       });
-      setMessage(`Registered with ID = ${user.id}`);
+      setMessage(`Success!!`);
       setTimeout(() => router.push("/"), 1000);
     } catch (e: any) {
       setMessage(`Error: ${e.message}`);
