@@ -33,10 +33,15 @@ export default function HomePage() {
     }
   }
   async function loadNotes() {
-    try {
-      const data = await api<Note[]>("/notes");
-      setNotes(data);
-    } catch (e: any) {
+  try {
+    const data = await api<Note[]>("/notes");
+    const sixHoursAgo = Date.now() - 6 * 60 * 60 * 1000;
+    const freshNotes = data.filter(n => {
+      const created = new Date(n.created_at).getTime();
+      return created >= sixHoursAgo;
+    });
+    setNotes(freshNotes);
+  }catch (e: any) {
       setError(e.message);
     }
   }
