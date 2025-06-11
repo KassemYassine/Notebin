@@ -8,6 +8,13 @@ pub async fn create_user(
     username: &str,
     password: &str,
 ) -> Result<User> {
+    if username.trim().is_empty() {
+        return Err(anyhow!("Username cannot be empty"));
+    }
+    if password.trim().is_empty() {
+        return Err(anyhow!("Password cannot be empty"));
+    }
+
     let user = sqlx::query_as!(
         User,
         r#"
@@ -23,6 +30,7 @@ pub async fn create_user(
 
     Ok(user)
 }
+
 
 pub async fn authenticate_user(
     pool: &PgPool,
