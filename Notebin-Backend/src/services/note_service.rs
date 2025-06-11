@@ -9,6 +9,9 @@ pub async fn create_note(
     creator_id: i32,
     content: &str,
 ) -> Result<Note> {
+        if content.chars().count() > 500 {
+        anyhow::bail!("Note content cannot exceed 500 characters");
+    }
     let note = sqlx::query_as!(
         Note,
         r#"

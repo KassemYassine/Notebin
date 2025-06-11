@@ -33,15 +33,15 @@ export default function HomePage() {
     }
   }
   async function loadNotes() {
-  try {
-    const data = await api<Note[]>("/notes");
-    const sixHoursAgo = Date.now() - 6 * 60 * 60 * 1000;
-    const freshNotes = data.filter(n => {
-      const created = new Date(n.created_at).getTime();
-      return created >= sixHoursAgo;
-    });
-    setNotes(freshNotes);
-  }catch (e: any) {
+    try {
+      const data = await api<Note[]>("/notes");
+      const sixHoursAgo = Date.now() - 6 * 60 * 60 * 1000;
+      const freshNotes = data.filter(n => {
+        const created = new Date(n.created_at).getTime();
+        return created >= sixHoursAgo;
+      });
+      setNotes(freshNotes);
+    } catch (e: any) {
       setError(e.message);
     }
   }
@@ -100,11 +100,21 @@ export default function HomePage() {
       </select>
 
       {}
+      <div className="flex justify-between items-center mb-1">
+        <label htmlFor="content" className="font-medium">
+          Note content…
+        </label>
+        <span className="text-sm text-gray-500">
+          Max 500
+        </span>
+      </div>
       <textarea
+        id="content"
         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 min-h-[200px]"
         placeholder="Note content…"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        maxLength={500}
       />
       <button
         className="w-full px-4 py-2 bg-amber-300 text-gray-800 rounded-md hover:bg-amber-600 transition-colors"
