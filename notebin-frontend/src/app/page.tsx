@@ -126,7 +126,7 @@ export default function HomePage() {
 
       {}
       <div className="space-y-2">
-        <h3 className="text-md font-semibold mt-6">All Notes</h3>
+        <h3 className="text-lg font-medium text-gray-800 mt-6">All Notes</h3>
         {notes.length === 0 && <p className="text-gray-500">No notes yet.</p>}
         {notes.map((n) => {
           const user = users.find(u => u.id === n.creator_id);

@@ -32,7 +32,7 @@ export default async function NotePage({
 
   return (
     <div className="max-w-md mx-auto mt-10 space-y-4 p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-gray-800">Note #{note.id}</h1>
+      <h1 className="text-lg font-bold text-gray-800">Note #{note.id}</h1>
 
       <div className="min-h-[200px]">
         <p className="whitespace-pre-wrap">{note.content}</p>
